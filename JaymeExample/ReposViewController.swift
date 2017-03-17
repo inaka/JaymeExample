@@ -69,6 +69,34 @@ class ReposViewController: UIViewController {
         self.tableView.reloadSections(indexSet, with: .automatic)
     }
     
+    @IBAction func add(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Create New Repo", message: "", preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Create", style: .default, handler: {
+            alert -> Void in
+            let textField = alertController.textFields![0] as UITextField
+            guard let name = textField.text, name != "" else { return }
+            self.createRepo(name: name)
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Repo's name"
+        }
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    fileprivate func createRepo(name: String) {
+        ReposRepository().create(name: name).start { result in
+            switch result {
+            case .success(_):
+                self.loadRepos()
+            case .failure(let error):
+                self.showAlert(for: error, message: "Your repo could not be created.")
+            }
+        }
+    }
+    
 }
 
 extension ReposViewController: UITableViewDataSource, UITableViewDelegate {

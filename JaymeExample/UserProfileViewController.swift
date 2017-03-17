@@ -63,8 +63,8 @@ class UserProfileViewController: UIViewController {
                 SVProgressHUD.show()
                 
             case .loaded(let profile):
-                SVProgressHUD.dismiss()
                 self.title = profile.fullName
+                SVProgressHUD.dismiss()
                 self.avatarImageView.setImage(from: profile.avatarURL)
                 self.nicknameLabel.text = profile.nickname
                 self.followersFollowingLabel.text = "\(profile.followersCount) FOLLOWERS | \(profile.followingCount) FOLLOWING"
@@ -72,9 +72,9 @@ class UserProfileViewController: UIViewController {
                 self.viewReposButton.isHidden = false
                 
             case .failed(let error):
+                self.title = "<- Go to Settings"
                 SVProgressHUD.dismiss()
                 self.showAlert(for: error, message: "Could not load your profile.\n\nGo to Settings and configure your Github's Personal access token.")
-                self.title = "<- Go to Settings"
             }
         }
     }

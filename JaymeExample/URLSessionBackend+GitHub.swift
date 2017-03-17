@@ -12,7 +12,7 @@ import Jayme
 extension URLSessionBackend {
     
     class var gitHubBackend: URLSessionBackend {
-        let basePath = "http://api.github.com"
+        let basePath = "https://api.github.com"
         var headers = [HTTPHeader(field: "Accept", value: "application/vnd.github.v3+json"),
                        HTTPHeader(field: "Content-Type", value: "application/json")]
         if let token = Cache.sharedCache.userToken {

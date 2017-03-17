@@ -13,22 +13,21 @@ struct Repo: Identifiable {
     let id: Int
     let fullName: String
     let isPrivate: Bool
-    let language: String
+    let language: String?
 }
 
 extension Repo: DictionaryInitializable {
     
-    init(dictionary: [AnyHashable : Any]) throws {
+    init(dictionary: [AnyHashable: Any]) throws {
         guard
             let id = dictionary["id"] as? Int,
             let fullName = dictionary["full_name"] as? String,
-            let isPrivate = dictionary["private"] as? Bool,
-            let language = dictionary["language"] as? String
+            let isPrivate = dictionary["private"] as? Bool
             else { throw JaymeError.parsingError }
         self.id = id
         self.fullName = fullName
         self.isPrivate = isPrivate
-        self.language = language
+        self.language = dictionary["language"] as? String
     }
     
 }
