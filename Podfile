@@ -2,7 +2,7 @@ platform :ios, "8.0"
 
 target "JaymeExample" do
     use_frameworks!
-    pod 'Jayme', :git => 'https://github.com/inaka/Jayme.git', :branch => 'dev'
+    pod 'Jayme', :git => 'https://github.com/inaka/Jayme.git', :branch => 'volbap.swift4'
     pod 'SVProgressHUD', '~> 2.1'
 end
 

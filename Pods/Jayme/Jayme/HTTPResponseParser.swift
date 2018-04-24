@@ -20,14 +20,17 @@
 
 import Foundation
 
-typealias FullHTTPResponse = (data: Data?, urlResponse: URLResponse?, error: Error?)
-typealias HTTPResponseParserResult = Result<(data: Data?, pageInfo: PageInfo?), JaymeError>
+public typealias FullHTTPResponse = (data: Data?, urlResponse: URLResponse?, error: Error?)
+public typealias HTTPResponseParserResult = Result<(data: Data?, pageInfo: PageInfo?), JaymeError>
 
 /// A parser that converts raw response data (as they come from `URLSession`) into other type of data that is more Jayme-architectured.
 open class HTTPResponseParser {
     
+    /// Public initializer
+    public init () {}
+    
     /// Turns response data as it comes from `URLSession` (a.k.a. `FullHTTPResponse`) into a different format, which is more useful from Jayme's perspective (a.k.a. `HTTPResponseParserResult`).
-    func parse(_ response: FullHTTPResponse) -> HTTPResponseParserResult {
+    open func parse(_ response: FullHTTPResponse) -> HTTPResponseParserResult {
         if let error = response.error {
             return .failure(.other(error))
         }
@@ -38,7 +41,7 @@ open class HTTPResponseParser {
             return .failure(error)
         }
         let pageInfo = self.pageInfo(fromHeaders: urlResponse.allHeaderFields)
-        return .success(data: response.data, pageInfo: pageInfo)
+        return .success((data: response.data, pageInfo: pageInfo))
     }
     
     // MARK: - Private
